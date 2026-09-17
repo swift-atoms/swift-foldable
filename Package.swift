@@ -4,38 +4,38 @@ import CompilerPluginSupport
 import PackageDescription
 
 let package = Package(
-    name: "swift-foldable-derivation",
+    name: "swift-foldable",
     products: [
-        .library(name: "Foldable Derivation", targets: ["Foldable Derivation"]),
-        .library(name: "Foldable Derivation Core", targets: ["Foldable Derivation Core"]),
+        .library(name: "Foldable Macro", targets: ["Foldable Macro"]),
+        .library(name: "Foldable Macro Core", targets: ["Foldable Macro Core"]),
     ],
     dependencies: [
         .package(url: "https://github.com/swiftlang/swift-syntax.git", "603.0.2"..<"604.0.0")
     ],
     targets: [
         .target(
-            name: "Foldable Derivation Core",
+            name: "Foldable Macro Core",
             dependencies: [
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
             ]
         ),
         .macro(
-            name: "Foldable Derivation Macros",
+            name: "Foldable Macro Plugin",
             dependencies: [
-                "Foldable Derivation Core",
+                "Foldable Macro Core",
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
             ]
         ),
         .target(
-            name: "Foldable Derivation",
-            dependencies: ["Foldable Derivation Macros"]
+            name: "Foldable Macro",
+            dependencies: ["Foldable Macro Plugin"]
         ),
         .testTarget(
-            name: "Foldable Derivation Tests",
-            dependencies: ["Foldable Derivation"]
+            name: "Foldable Macro Tests",
+            dependencies: ["Foldable Macro"]
         ),
     ],
     swiftLanguageModes: [.v6]

@@ -1,4 +1,4 @@
-import Foldable_Derivation
+import Foldable_Macro
 import Testing
 
 @Foldable
