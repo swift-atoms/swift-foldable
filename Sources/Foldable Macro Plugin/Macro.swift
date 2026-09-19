@@ -9,9 +9,10 @@ public struct Macro: MemberMacro {
         conformingTo _: [TypeSyntax],
         in _: some MacroExpansionContext
     ) throws -> [DeclSyntax] {
+        if let enumeration = declaration.as(EnumDeclSyntax.self) { return Derivation.expansion(of: enumeration) }
         guard let declaration = declaration.as(StructDeclSyntax.self) else {
             throw MacroExpansionErrorMessage(
-                "@Foldable applies to a generic struct declaration only."
+                "@Foldable applies to a generic struct or enum declaration."
             )
         }
         return Derivation.expansion(of: declaration)
