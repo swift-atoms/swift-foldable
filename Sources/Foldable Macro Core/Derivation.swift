@@ -44,7 +44,6 @@ public enum Derivation {
                     try reduce(Type.Syntax.Expression($0.element.type, parameters: [parameter.name.text]), value: "value\($0.offset)", parameter: parameter.name.text)
                 }.filter { !$0.isEmpty }.joined(separator: "\n")
                 let pattern = payloads.isEmpty ? ".\(item.name.text)" : "let .\(item.name.text)(\(payloads.indices.map { "value\($0)" }.joined(separator: ", ")))"
-                // Constant payloads still bind; silence their intentional absence from the fold.
                 let unused = payloads.enumerated().filter { Type.Syntax.Expression($0.element.type, parameters: [parameter.name.text]).polarity(of: parameter.name.text).isEmpty }.map { "_ = value\($0.offset)" }.joined(separator: "\n")
                 return "case \(pattern): \(unused)\n\(body.isEmpty ? "break" : body)"
             }.joined(separator: "\n")
