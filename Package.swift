@@ -26,7 +26,7 @@ let package = Package(
         .macro(
             name: "Foldable Macro Plugin",
             dependencies: [
-                "Foldable Macro Core",
+                .target(name: "Foldable Macro Core"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
@@ -35,17 +35,17 @@ let package = Package(
         .target(
             name: "Foldable Macro",
             dependencies: [
-            .product(name: "Algebra", package: "swift-algebra"),"Foldable Macro Plugin"]
+            .product(name: "Algebra", package: "swift-algebra"),.target(name: "Foldable Macro Plugin")]
         ),
         .testTarget(
             name: "Foldable Macro Tests",
-            dependencies: ["Foldable Macro"]
+            dependencies: [.target(name: "Foldable Macro")]
         ),
     ],
     swiftLanguageModes: [.v6]
 )
 
-for target in package.targets where ![.system, .binary, .plugin].contains(target.type) {
+for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
     target.swiftSettings = (target.swiftSettings ?? []) + [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),

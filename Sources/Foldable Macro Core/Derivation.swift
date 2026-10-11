@@ -2,7 +2,9 @@ import Type_Algebra_Syntax
 public import SwiftSyntax
 import SwiftSyntaxBuilder
 
-public enum Derivation {
+public enum Derivation {}
+
+extension Derivation {
     private static func reduce(_ type: Type.Syntax.Expression, value: String, parameter: String) throws -> String {
         try Type.Syntax.Traversal.interpret(type, value: value, parameter: parameter,
             constant: { _, _ in "" },
